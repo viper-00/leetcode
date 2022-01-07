@@ -341,6 +341,84 @@ func mySqrt(x int) int {
 }
 
 // 70.
-// func climbStairs(n int) int {
+func climbStairs(n int) int {
+	if n == 1 || n == 2 {
+		return n
+	}
+
+	dp := make([]int, n+1)
+	dp[1] = 1
+	dp[2] = 2
+	for i := 3; i <= n; i++ {
+		dp[i] = dp[i-1] + dp[i-2]
+	}
+	return dp[n]
+}
+
+func climbStairs2(n int) int {
+	if n == 1 || n == 2 {
+		return n
+	}
+
+	dp := make([]int, 3)
+	dp[1] = 1
+	dp[2] = 2
+	for i := 3; i <= n; i++ {
+		sum := dp[1] + dp[2]
+		dp[1] = dp[2]
+		dp[2] = sum
+	}
+	return dp[2]
+}
+
+// 83.
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func deleteDuplicates(head *ListNode) *ListNode {
+	if head == nil {
+		return head
+	}
+	list := head
+	listMap := make(map[int]bool)
+	listMap[list.Val] = true
+	for list.Next != nil {
+		if _, ok := listMap[list.Next.Val]; ok {
+			list.Next = list.Next.Next
+		} else {
+			listMap[list.Next.Val] = true
+			list = list.Next
+		}
+	}
+	return head
+}
+
+// 88.
+func merge(nums1 []int, m int, nums2 []int, n int) {
+	for n > 0 {
+		if m == 0 || nums2[n-1] > nums1[m-1] {
+			nums1[m+n-1] = nums2[n-1]
+			n--
+		} else {
+			nums1[m+n-1] = nums1[m-1]
+			m--
+		}
+	}
+}
+
+// 94.
+//
+// Definition for a binary tree node.
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+// func inorderTraversal(root *TreeNode) []int {
 
 // }
