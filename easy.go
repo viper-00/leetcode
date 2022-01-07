@@ -242,6 +242,105 @@ func maxSubArray(nums []int) int {
 }
 
 // 58.
-// func lengthOfLastWord(s string) int {
+func lengthOfLastWord(s string) int {
+	sLen := len(s)
+	var wordCount int
+	for i := sLen - 1; i >= 0; i-- {
+		if s[i] != ' ' {
+			wordCount++
+		} else {
+			if wordCount != 0 {
+				return wordCount
+			}
+		}
+	}
+
+	return wordCount
+}
+
+// 66.
+func plusOne(digits []int) []int {
+	dlen := len(digits)
+	var carry int
+	for i := dlen - 1; i >= 0; i-- {
+		var afterCarry int
+		if i == dlen-1 {
+			if digits[i]+1 >= 10 {
+				afterCarry = 1
+			} else {
+				afterCarry = 0
+			}
+			digits[i] = (digits[i] + 1) % 10
+		} else {
+			if digits[i]+carry >= 10 {
+				afterCarry = 1
+			} else {
+				afterCarry = 0
+			}
+			digits[i] = (digits[i] + carry) % 10
+		}
+		carry = afterCarry
+	}
+	if carry == 1 {
+		newDigits := make([]int, dlen+1)
+		newDigits[0] = 1
+		for i := 0; i < dlen-1; i++ {
+			newDigits[i+1] = digits[i]
+		}
+		return newDigits
+	}
+
+	return digits
+}
+
+// 67.
+func addBinary(a string, b string) string {
+	var s, carry int
+	var result string
+	la := len(a) - 1
+	lb := len(b) - 1
+	for la >= 0 || lb >= 0 || carry != 0 {
+		s = carry
+		if la >= 0 {
+			s += int(a[la] - '0')
+			la--
+		}
+		if lb >= 0 {
+			s += int(b[lb] - '0')
+			lb--
+		}
+		carry = s / 2
+		result = string(s%2+'0') + result
+	}
+	return result
+}
+
+// 69.
+func mySqrt(x int) int {
+	if x == 0 || x == 1 {
+		return x
+	}
+	left := 0
+	right := x / 2
+	var pivot int
+
+	for left <= right {
+		pivot = left + (right-left)/2
+		pp := pivot * pivot
+
+		if pp == x || (pp < x && (pivot+1)*(pivot+1) > x) {
+			return pivot
+		} else if pp > x {
+			right = pivot - 1
+		} else {
+			left = pivot + 1
+		}
+	}
+
+	return pivot
+}
+
+// 70.
+// func climbStairs(n int) int {
 
 // }
