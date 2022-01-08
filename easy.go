@@ -419,6 +419,155 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-// func inorderTraversal(root *TreeNode) []int {
+func inorderTraversal(root *TreeNode) []int {
+	if root == nil {
+		return []int{}
+	}
+
+	left := inorderTraversal(root.Left)
+	left = append(left, root.Val)
+	right := inorderTraversal(root.Right)
+	left = append(left, right...)
+
+	return left
+}
+
+func inorderTraversal2(root *TreeNode) []int {
+	if root == nil {
+		return []int{}
+	}
+
+	ans := []int{}
+
+	var inorder func(root *TreeNode)
+	inorder = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+
+		inorder(root.Left)
+		ans = append(ans, root.Val)
+		inorder(root.Right)
+	}
+
+	inorder(root)
+	return ans
+}
+
+// 100.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isSameTree(p *TreeNode, q *TreeNode) bool {
+	if p == nil && q == nil {
+		return true
+	}
+	if p == nil || q == nil || p.Val != q.Val {
+		return false
+	}
+
+	return isSameTree(p.Left, q.Left) && isSameTree(p.Right, q.Right)
+}
+
+// 101.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isSymmetric(root *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+
+	var symmetric func(node1 *TreeNode, node2 *TreeNode) bool
+
+	symmetric = func(node1 *TreeNode, node2 *TreeNode) bool {
+		if node1 == nil && node2 == nil {
+			return true
+		}
+
+		if node1 == nil || node2 == nil {
+			return false
+		}
+
+		if node1.Val != node2.Val {
+			return false
+		}
+
+		return symmetric(node1.Left, node2.Right) && symmetric(node1.Right, node2.Left)
+	}
+	return symmetric(root.Left, root.Right)
+}
+
+// 104.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func maxDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	var count int
+	leftDepth := maxDepth(root.Left)
+	rightDepth := maxDepth(root.Right)
+	if leftDepth > rightDepth {
+		count = 1 + leftDepth
+	} else {
+		count = 1 + rightDepth
+	}
+	return count
+}
+
+// 108.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func sortedArrayToBST(nums []int) *TreeNode {
+	if len(nums) == 0 {
+		return nil
+	}
+
+	median := len(nums) / 2
+
+	return &TreeNode{
+		Val:   nums[len(nums)/2],
+		Left:  sortedArrayToBST(nums[:median]),
+		Right: sortedArrayToBST(nums[median+1:]),
+	}
+}
+
+// 110.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+// func isBalanced(root *TreeNode) bool {
+// 	if root == nil {
+// 		return true
+// 	}
 
 // }
