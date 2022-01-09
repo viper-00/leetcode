@@ -565,9 +565,118 @@ func sortedArrayToBST(nums []int) *TreeNode {
  *     Right *TreeNode
  * }
  */
-// func isBalanced(root *TreeNode) bool {
-// 	if root == nil {
-// 		return true
-// 	}
+func isBalanced(root *TreeNode) bool {
+	var helper func(node *TreeNode) int
+	var max func(a, b int) int
+
+	helper = func(node *TreeNode) int {
+		if node == nil {
+			return 0
+		}
+		left := helper(node.Left)
+		right := helper(node.Right)
+		if left == -1 || right == -1 || left-right > 1 || right-left > 1 {
+			return -1
+		}
+		return max(left, right) + 1
+	}
+
+	max = func(a, b int) int {
+		if a > b {
+			return a
+		}
+		return b
+	}
+
+	return helper(root) != -1
+}
+
+// 111.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func minDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	if root.Left == nil && root.Right == nil {
+		return 1
+	}
+	if root.Left == nil {
+		return 1 + minDepth(root.Right)
+	}
+	if root.Right == nil {
+		return 1 + minDepth(root.Left)
+	}
+	return 1 + min(minDepth(root.Left), minDepth(root.Right))
+}
+
+func min(a, b int) int {
+	if a > b {
+		return b
+	}
+	return a
+}
+
+// 112.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func hasPathSum(root *TreeNode, targetSum int) bool {
+	if root == nil {
+		return false
+	}
+	if root.Left == nil && root.Right == nil {
+		return targetSum == root.Val
+	}
+
+	return hasPathSum(root.Left, targetSum-root.Val) || hasPathSum(root.Right, targetSum-root.Val)
+}
+
+// 118.
+func generate(numRows int) [][]int {
+	var result [][]int
+
+	for i := 1; i <= numRows; i++ {
+		var row = make([]int, i)
+		row[0], row[len(row)-1] = 1, 1
+		for j := 1; j < len(row)-1; j++ {
+			row[j] = result[i-2][j] + result[i-2][j-1]
+		}
+		result = append(result, row)
+	}
+
+	return result
+}
+
+// 119.
+func getRow(rowIndex int) []int {
+	var arrays [][]int
+	for i := 1; i <= rowIndex+1; i++ {
+		var row = make([]int, i)
+		row[0], row[len(row)-1] = 1, 1
+		for j := 1; j < len(row)-1; j++ {
+			row[j] = arrays[i-2][j] + arrays[i-2][j-1]
+		}
+		if rowIndex == i-1 {
+			return row
+		}
+		arrays = append(arrays, row)
+	}
+	return []int{}
+}
+
+// 121.
+// func maxProfit(prices []int) int {
 
 // }
