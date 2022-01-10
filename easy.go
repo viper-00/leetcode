@@ -677,6 +677,24 @@ func getRow(rowIndex int) []int {
 }
 
 // 121.
-// func maxProfit(prices []int) int {
+func maxProfit(prices []int) int {
+	if len(prices) == 0 {
+		return 0
+	}
+
+	var max, lowest int
+	for i := 1; i < len(prices); i++ {
+		if prices[lowest] > prices[i] {
+			lowest = i
+		} else if cur := prices[i] - prices[lowest]; cur > max {
+			max = cur
+		}
+	}
+
+	return max
+}
+
+// 125.
+// func isPalindrome(s string) bool {
 
 // }
