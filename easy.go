@@ -1,5 +1,7 @@
 package leetcode
 
+import "strings"
+
 // 1.
 func twoSum(nums []int, target int) []int {
 	var items = make(map[int]int, len(nums))
@@ -695,6 +697,32 @@ func maxProfit(prices []int) int {
 }
 
 // 125.
-// func isPalindrome(s string) bool {
+func isPalindrome2(s string) bool {
 
-// }
+	var isValid func(a byte) bool
+
+	i, j := 0, len(s)-1
+	for i < j {
+		if !isValid(s[i]) {
+			i++
+			continue
+		}
+		if !isValid(s[j]) {
+			j--
+			continue
+		}
+		if !strings.EqualFold(string(s[i]), string(s[j])) {
+			return false
+		}
+		i++
+		j--
+
+		isValid = func(a byte) bool {
+			if (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z') || (a >= '0' && a <= '9') {
+				return true
+			}
+			return false
+		}
+	}
+	return true
+}
