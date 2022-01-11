@@ -699,7 +699,12 @@ func maxProfit(prices []int) int {
 // 125.
 func isPalindrome2(s string) bool {
 
-	var isValid func(a byte) bool
+	isValid := func(a byte) bool {
+		if (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z') || (a >= '0' && a <= '9') {
+			return true
+		}
+		return false
+	}
 
 	i, j := 0, len(s)-1
 	for i < j {
@@ -716,13 +721,7 @@ func isPalindrome2(s string) bool {
 		}
 		i++
 		j--
-
-		isValid = func(a byte) bool {
-			if (a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z') || (a >= '0' && a <= '9') {
-				return true
-			}
-			return false
-		}
 	}
+
 	return true
 }
