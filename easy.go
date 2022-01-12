@@ -725,3 +725,45 @@ func isPalindrome2(s string) bool {
 
 	return true
 }
+
+// 136.
+func singleNumber(nums []int) int {
+	var kv = make(map[int]bool, len(nums))
+	for i := 0; i < len(nums); i++ {
+		if _, ok := kv[nums[i]]; !ok {
+			kv[nums[i]] = false
+		} else {
+			kv[nums[i]] = true
+		}
+	}
+
+	for k, e := range kv {
+		if !e {
+			return k
+		}
+	}
+
+	return 0
+}
+
+func singleNumber2(nums []int) int {
+	if len(nums) == 1 {
+		return nums[0]
+	}
+	for i := 1; i < len(nums); i++ {
+		nums[0] = nums[0] ^ nums[i]
+	}
+	return nums[0]
+}
+
+// 141.
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+// func hasCycle(head *ListNode) bool {
+
+// }
