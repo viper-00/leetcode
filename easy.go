@@ -778,3 +778,106 @@ func hasCycle(head *ListNode) bool {
 	}
 	return true
 }
+
+func hasCycle2(head *ListNode) bool {
+	// memory address
+	dict := make(map[*ListNode]struct{})
+	for head != nil {
+		if _, ok := dict[head]; ok {
+			return true
+		}
+		dict[head] = struct{}{}
+		head = head.Next
+	}
+	return false
+}
+
+// 144.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func preorderTraversal(root *TreeNode) []int {
+	var ans []int
+
+	var preorder func(*TreeNode)
+
+	preorder = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+		ans = append(ans, root.Val)
+		preorder(root.Left)
+		preorder(root.Right)
+	}
+
+	preorder(root)
+
+	return ans
+}
+
+// 145.
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func postorderTraversal(root *TreeNode) []int {
+	var ans []int
+
+	var postorder func(*TreeNode)
+
+	postorder = func(root *TreeNode) {
+		if root == nil {
+			return
+		}
+		postorder(root.Left)
+		postorder(root.Right)
+		ans = append(ans, root.Val)
+	}
+
+	postorder(root)
+
+	return ans
+}
+
+// 155.
+// type MinStack struct {
+
+// }
+
+// func Constructor() MinStack {
+
+// }
+
+// func (this *MinStack) Push(val int)  {
+
+// }
+
+// func (this *MinStack) Pop()  {
+
+// }
+
+// func (this *MinStack) Top() int {
+
+// }
+
+// func (this *MinStack) GetMin() int {
+
+// }
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(val);
+ * obj.Pop();
+ * param_3 := obj.Top();
+ * param_4 := obj.GetMin();
+ */
